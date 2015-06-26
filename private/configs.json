@@ -1,0 +1,11 @@
+{
+  "default" : {
+    "adminUser" : {
+      "username" : "nxcong",
+      "email" : "nguyenxuancong@outlook.com",
+      "password" : "!HMND23",
+      "roles" : ["admin","moderator","user"],
+      "fullname" : "Nguyễn Xuân Công"
+    }
+  }
+}
