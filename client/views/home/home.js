@@ -1,3 +1,8 @@
+
+Template.home.onCreated(function(){
+    currentLocation = new ReactiveVar({});
+})
+
 Template.home.rendered = function(){
     $(document).ready(function(){
         L.Icon.Default.imagePath = '/packages/bevanhunt_leaflet/images';
@@ -29,10 +34,19 @@ Template.home.rendered = function(){
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
 
-    L.marker(e.latlng).addTo(map)
-        .bindPopup("Bạn đang trong bán kính " + radius + " mét tại điểm này.").openPopup();
+    var current = currentLocation.get();
+    if(_.has(current,'marker') && _.has(current,'circle')){
+        map.removeLayer(current.marker);
+        map.removeLayer(current.circle);
+    }
+    var marker = L.marker(e.latlng).addTo(map).bindPopup("Bạn đang trong bán kính " + radius + " mét tại điểm này.").openPopup(),
+        circle = L.circle(e.latlng, radius).addTo(map);
 
-    L.circle(e.latlng, radius).addTo(map);
+
+    currentLocation.set({
+        marker : marker,
+        circle : circle
+    });
 }
 
 function onLocationError(e) {

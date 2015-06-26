@@ -12,7 +12,7 @@ Template.admin_login.events({
                 if(err){
                     console.log('Error : ',err);
                 }else{
-                    FlowRouter.go('/admin/');
+                    FlowRouter.go('/admin');
                 }
             })
         }
