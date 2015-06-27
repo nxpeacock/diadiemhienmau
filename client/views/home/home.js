@@ -13,7 +13,10 @@ Template.home.onCreated(function(){
                 var popup = _.template('<b><%=name%></b></br><%=description%>')
                 var LatLng = _.map(l.LatLng.split(','),function(i){ return parseFloat(i)}),
                     marker = L.marker(LatLng).addTo(map).bindPopup(popup({name : l.name, description : l.description})),
-                    circle = L.circle(LatLng, l.radius).addTo(map);
+                    circle = L.circle(LatLng, l.radius,{
+                        color : 'red',
+                        fillColor : randomColor()
+                    }).addTo(map);
                     available.push({
                         marker : marker,
                         circle : circle
@@ -22,6 +25,12 @@ Template.home.onCreated(function(){
             availableLocations.set(available);
         }
     })
+})
+
+Template.home.helpers({
+    isReady : function () {
+        return FlowRouter.subsReady();
+    }
 })
 
 Template.home.rendered = function(){
