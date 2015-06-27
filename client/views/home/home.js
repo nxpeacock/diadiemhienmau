@@ -1,10 +1,11 @@
 
 Template.home.onCreated(function(){
     currentLocation = new ReactiveVar({});
-    mapView = new ReactiveVar({});
+    mapView = new ReactiveVar(undefined);
+    map = undefined;
     availableLocations = new ReactiveVar([]);
     this.autorun(function(c){
-        if(FlowRouter.subsReady('myLocations') && mapView.get()){
+        if(FlowRouter.subsReady('myLocations') && !_.isEmpty(mapView.get())){
             var myLocations = Locations.find().fetch(),
                 map = mapView.get(),
                 available = []
