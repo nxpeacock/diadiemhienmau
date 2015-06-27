@@ -7,4 +7,7 @@ if(Meteor.isServer){
         return Locations.find({_id : id});
     });
 
+    Meteor.publish('locationsByDay',function(fromDate,toDate){
+
+    })
 }

@@ -1,6 +1,26 @@
 
 Template.home.onCreated(function(){
     currentLocation = new ReactiveVar({});
+    mapView = new ReactiveVar({});
+    availableLocations = new ReactiveVar([]);
+    this.autorun(function(c){
+        if(FlowRouter.subsReady('myLocations') && mapView.get()){
+            var myLocations = Locations.find().fetch(),
+                map = mapView.get(),
+                available = []
+            _.each(myLocations,function(l){
+                var popup = _.template('<b><%=name%></b></br><%=description%>')
+                var LatLng = _.map(l.LatLng.split(','),function(i){ return parseFloat(i)}),
+                    marker = L.marker(LatLng).addTo(map).bindPopup(popup({name : l.name, description : l.description})),
+                    circle = L.circle(LatLng, l.radius).addTo(map);
+                    available.push({
+                        marker : marker,
+                        circle : circle
+                    });
+            })
+            availableLocations.set(available);
+        }
+    })
 })
 
 Template.home.rendered = function(){
@@ -28,6 +48,8 @@ Template.home.rendered = function(){
         L.easyButton('fa-refresh', function(btn, map){
             location.reload();
         }).addTo(map);
+
+        mapView.set(map);
     })
 }
 

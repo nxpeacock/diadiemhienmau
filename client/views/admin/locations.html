@@ -1,18 +1,17 @@
-<template name="locations_create">
+<template name="insertLocationForm">
     <div class="row">
         <div class="col-md-8">
             {{#autoForm collection="Locations" id="insertLocationForm" type="insert"}}
                 <fieldset>
                     <legend>Thêm địa điểm</legend>
-                    <div class="form-group" data-required="true">
+                    <div class="form-group">
                         <label for="availableRange" class="control-label">Thời gian</label>
-                        <input type="datetime" name="radius" id="availableRange" required="" data-schema-key="availableRange" class="form-control">
-                        <span class="help-block"></span>
+                        <input type="text" name="availableRange" id="availableRange" class="form-control">
                     </div>
                     {{> afQuickField name='name'}}
                     {{> afQuickField name='description' rows=6}}
                     {{> afQuickField name='LatLng'}}
-                    {{> afQuickField name='radius'}}
+                    {{> afQuickField name='radius' value=200}}
                 </fieldset>
                 <button type="submit" class="btn btn-primary">Lưu lại</button>
             {{/autoForm}}
